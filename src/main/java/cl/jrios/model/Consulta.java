@@ -22,11 +22,14 @@ public class Consulta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idConsulta;
 
-	/* Se realiza solo una relacion manyToOne debido a que no necesito una relacion maestro detalle desde paciente a consulta */
+	/*
+	 * Se realiza solo una relacion manyToOne debido a que no necesito una relacion
+	 * maestro detalle desde paciente a consulta
+	 */
 	@ManyToOne
 	@JoinColumn(name = "id_paciente", nullable = false, foreignKey = @ForeignKey(name = "FK_consulta_paciente"))
 	private Paciente paciente;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_medico", nullable = false, foreignKey = @ForeignKey(name = "fk_consulta_medico"))
 	private Medico medico;
@@ -86,6 +89,31 @@ public class Consulta {
 
 	public void setDetalleConsulta(List<DetalleConsulta> detalleConsulta) {
 		this.detalleConsulta = detalleConsulta;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idConsulta == null) ? 0 : idConsulta.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Consulta other = (Consulta) obj;
+		if (idConsulta == null) {
+			if (other.idConsulta != null)
+				return false;
+		} else if (!idConsulta.equals(other.idConsulta))
+			return false;
+		return true;
 	}
 
 }
