@@ -1,8 +1,14 @@
 package cl.jrios.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +27,10 @@ public class Menu {
 	@Column(name = "url", length = 50)
 	private String url;
 
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "menu_rol", joinColumns = @JoinColumn(name = "id_menu", referencedColumnName = "idMenu"), inverseJoinColumns = @JoinColumn(name = "id_rol", referencedColumnName = "idRol"))
+	private List<Rol> roles;
+	
 	public Integer getIdMenu() {
 		return idMenu;
 	}
@@ -52,5 +62,13 @@ public class Menu {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+
+	public List<Rol> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Rol> roles) {
+		this.roles = roles;
+	}
+		
 }
