@@ -50,6 +50,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- JSR 303 Validation -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		<!-- JSR 303 Validation # -->
 	</dependencies>
 
 	<build>
