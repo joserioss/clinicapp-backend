@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import cl.jrios.model.Examen;
 import cl.jrios.repo.IExamenRepo;
 import cl.jrios.service.IExamenService;
 
+@Service
 public class ExamenServiceImpl implements IExamenService{
 
 	@Autowired	
