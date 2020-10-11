@@ -14,6 +14,11 @@ import javax.persistence.ManyToOne;
 @Embeddable
 public class ConsultaExamenPK implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 86022615406094519L;
+
 	@ManyToOne
 	@JoinColumn(name = "id_examen", nullable = false)
 	private Examen examen;

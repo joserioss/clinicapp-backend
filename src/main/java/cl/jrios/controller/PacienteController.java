@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import cl.jrios.exception.ModelNotFoundException;
 import cl.jrios.model.Paciente;
 import cl.jrios.service.IPacienteService;
 
@@ -37,13 +38,16 @@ public class PacienteController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Paciente> listarPorId(@PathVariable("id") Integer id){
 		Paciente pac = service.leerPorId(id);
+		if(pac.getIdPaciente() == null) {
+			throw new ModelNotFoundException("ID NO ENCONTRADO " + id);
+		}
 		return new ResponseEntity<Paciente>(pac, HttpStatus.OK); 
 	}
 	
 	
 	@PostMapping
 	public ResponseEntity<Object> registrar(@Valid @RequestBody Paciente paciente) {
-		Paciente pac = service.registrar(paciente);
+		service.registrar(paciente);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(paciente.getIdPaciente()).toUri();
 		return ResponseEntity.created(location).build();
 	}
@@ -58,6 +62,9 @@ public class PacienteController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> eliminar(@PathVariable("id") Integer id){
 		Paciente pac = service.leerPorId(id);
+		if(pac.getIdPaciente() == null) {
+			throw new ModelNotFoundException("ID NO ENCONTRADO " + id);
+		}
 		service.eliminar(id);
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
