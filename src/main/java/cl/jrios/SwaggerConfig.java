@@ -18,7 +18,7 @@ public class SwaggerConfig {
 
 	public static final Contact DEFAULT_CONTACT = new Contact("JIRS", "https://joserioss.github.io/portafolio/",
 			"ing.jose.rioss@gmail.com");
-	public static final ApiInfo DEFAULT_API_INFO = new ApiInfo("Mediapp Api Documentation", "Mediapp Api Documentation", "1.0",
+	public static final ApiInfo DEFAULT_API_INFO = new ApiInfo("ClinicAPP Documentation", "Mediapp Api Documentation", "1.0",
 			"PREMIUM", DEFAULT_CONTACT, "Apache 2.0", "http://www.apache.org/licenses/LICENSE-2.0",
 			new ArrayList<VendorExtension>());
 	
