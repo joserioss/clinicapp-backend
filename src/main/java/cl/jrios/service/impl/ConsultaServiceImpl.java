@@ -5,8 +5,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import cl.jrios.dto.ConsultaListaExamenDTO;
 import cl.jrios.model.Consulta;
+import cl.jrios.repo.IConsultaExamenRepo;
 import cl.jrios.repo.IConsultaRepo;
 import cl.jrios.service.IConsultaService;
 
@@ -16,9 +19,29 @@ public class ConsultaServiceImpl implements IConsultaService{
 	@Autowired	
 	private IConsultaRepo repo;
 	
+	@Autowired
+	private IConsultaExamenRepo consulaExamenRepo;
+	
 	@Override
 	public Consulta registrar(Consulta obj) {
+		obj.getDetalleConsulta().forEach(det -> {
+			det.setConsulta(obj);
+		});
 		return repo.save(obj);
+	}
+	
+	@Transactional
+	@Override
+	public Consulta registrarTransaccional(ConsultaListaExamenDTO dto) {
+		dto.getConsulta().getDetalleConsulta().forEach(det -> {
+			det.setConsulta(dto.getConsulta());
+		});
+		repo.save(dto.getConsulta());
+		
+		dto.getLstExamen().forEach(ex -> consulaExamenRepo.registrar(dto.getConsulta().getIdConsulta(), ex.getIdExamen()));
+		
+		return dto.getConsulta();
+		
 	}
 
 	@Override

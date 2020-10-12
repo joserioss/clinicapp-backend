@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import cl.jrios.dto.ConsultaListaExamenDTO;
 import cl.jrios.exception.ModelNotFoundException;
 import cl.jrios.model.Consulta;
 import cl.jrios.service.IConsultaService;
@@ -46,9 +47,9 @@ public class ConsultaController {
 	
 	
 	@PostMapping
-	public ResponseEntity<Object> registrar(@Valid @RequestBody Consulta consulta) {
-		service.registrar(consulta);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(consulta.getIdConsulta()).toUri();
+	public ResponseEntity<Object> registrar(@Valid @RequestBody ConsultaListaExamenDTO consultaDTO) {
+		Consulta obj = service.registrarTransaccional(consultaDTO);
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdConsulta()).toUri();
 		return ResponseEntity.created(location).build();
 	}
 	
