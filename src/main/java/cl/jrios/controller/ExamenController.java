@@ -19,50 +19,50 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import cl.jrios.exception.ModelNotFoundException;
-import cl.jrios.model.Paciente;
-import cl.jrios.service.IPacienteService;
+import cl.jrios.model.Examen;
+import cl.jrios.service.IExamenService;
 
 @RestController
-@RequestMapping("/pacientes")
-public class PacienteController {
+@RequestMapping("/examenes")
+public class ExamenController {
 	
 	@Autowired
-	private IPacienteService service;
+	private IExamenService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Paciente>> listar(){
-		 List<Paciente> lista = service.listar();
-		return new ResponseEntity<List<Paciente>>(lista, HttpStatus.OK);
+	public ResponseEntity<List<Examen>> listar(){
+		 List<Examen> lista = service.listar();
+		return new ResponseEntity<List<Examen>>(lista, HttpStatus.OK);
 	}
 		
 	@GetMapping("/{id}")
-	public ResponseEntity<Paciente> listarPorId(@PathVariable("id") Integer id){
-		Paciente obj = service.leerPorId(id);
-		if(obj.getIdPaciente() == null) {
+	public ResponseEntity<Examen> listarPorId(@PathVariable("id") Integer id){
+		Examen obj = service.leerPorId(id);
+		if(obj.getIdExamen() == null) {
 			throw new ModelNotFoundException("ID NO ENCONTRADO " + id);
 		}
-		return new ResponseEntity<Paciente>(obj, HttpStatus.OK); 
+		return new ResponseEntity<Examen>(obj, HttpStatus.OK); 
 	}
 	
 	
 	@PostMapping
-	public ResponseEntity<Object> registrar(@Valid @RequestBody Paciente paciente) {
-		service.registrar(paciente);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(paciente.getIdPaciente()).toUri();
+	public ResponseEntity<Object> registrar(@Valid @RequestBody Examen examen) {
+		service.registrar(examen);
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(examen.getIdExamen()).toUri();
 		return ResponseEntity.created(location).build();
 	}
 	
 	
 	@PutMapping
-	public ResponseEntity<Paciente> modificar(@Valid @RequestBody Paciente paciente) {
-		Paciente obj = service.modificar(paciente);
-		return new ResponseEntity<Paciente>(obj, HttpStatus.OK);
+	public ResponseEntity<Examen> modificar(@Valid @RequestBody Examen examen) {
+		Examen obj = service.modificar(examen);
+		return new ResponseEntity<Examen>(obj, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> eliminar(@PathVariable("id") Integer id){
-		Paciente obj = service.leerPorId(id);
-		if(obj.getIdPaciente() == null) {
+		Examen obj = service.leerPorId(id);
+		if(obj.getIdExamen() == null) {
 			throw new ModelNotFoundException("ID NO ENCONTRADO " + id);
 		}
 		service.eliminar(id);

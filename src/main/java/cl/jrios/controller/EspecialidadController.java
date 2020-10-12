@@ -19,50 +19,50 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import cl.jrios.exception.ModelNotFoundException;
-import cl.jrios.model.Paciente;
-import cl.jrios.service.IPacienteService;
+import cl.jrios.model.Especialidad;
+import cl.jrios.service.IEspecialidadService;
 
 @RestController
-@RequestMapping("/pacientes")
-public class PacienteController {
+@RequestMapping("/especialidades")
+public class EspecialidadController {
 	
 	@Autowired
-	private IPacienteService service;
+	private IEspecialidadService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Paciente>> listar(){
-		 List<Paciente> lista = service.listar();
-		return new ResponseEntity<List<Paciente>>(lista, HttpStatus.OK);
+	public ResponseEntity<List<Especialidad>> listar(){
+		 List<Especialidad> lista = service.listar();
+		return new ResponseEntity<List<Especialidad>>(lista, HttpStatus.OK);
 	}
 		
 	@GetMapping("/{id}")
-	public ResponseEntity<Paciente> listarPorId(@PathVariable("id") Integer id){
-		Paciente obj = service.leerPorId(id);
-		if(obj.getIdPaciente() == null) {
+	public ResponseEntity<Especialidad> listarPorId(@PathVariable("id") Integer id){
+		Especialidad obj = service.leerPorId(id);
+		if(obj.getIdEspecialidad() == null) {
 			throw new ModelNotFoundException("ID NO ENCONTRADO " + id);
 		}
-		return new ResponseEntity<Paciente>(obj, HttpStatus.OK); 
+		return new ResponseEntity<Especialidad>(obj, HttpStatus.OK); 
 	}
 	
 	
 	@PostMapping
-	public ResponseEntity<Object> registrar(@Valid @RequestBody Paciente paciente) {
-		service.registrar(paciente);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(paciente.getIdPaciente()).toUri();
+	public ResponseEntity<Object> registrar(@Valid @RequestBody Especialidad especialidad) {
+		service.registrar(especialidad);
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(especialidad.getIdEspecialidad()).toUri();
 		return ResponseEntity.created(location).build();
 	}
 	
 	
 	@PutMapping
-	public ResponseEntity<Paciente> modificar(@Valid @RequestBody Paciente paciente) {
-		Paciente obj = service.modificar(paciente);
-		return new ResponseEntity<Paciente>(obj, HttpStatus.OK);
+	public ResponseEntity<Especialidad> modificar(@Valid @RequestBody Especialidad especialidad) {
+		Especialidad obj = service.modificar(especialidad);
+		return new ResponseEntity<Especialidad>(obj, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> eliminar(@PathVariable("id") Integer id){
-		Paciente obj = service.leerPorId(id);
-		if(obj.getIdPaciente() == null) {
+		Especialidad obj = service.leerPorId(id);
+		if(obj.getIdEspecialidad() == null) {
 			throw new ModelNotFoundException("ID NO ENCONTRADO " + id);
 		}
 		service.eliminar(id);
