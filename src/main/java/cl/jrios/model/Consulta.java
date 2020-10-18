@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -37,6 +38,9 @@ public class Consulta {
 	@ManyToOne
 	@JoinColumn(name = "id_especialidad", nullable = false, foreignKey = @ForeignKey(name = "fk_consulta_especialidad"))
 	private Especialidad especialidad;
+	
+	@Column(name = "num_consultorio", length = 3, nullable = false)
+	private String numConsultorio;
 
 	private LocalDateTime fecha;
 
@@ -89,6 +93,14 @@ public class Consulta {
 
 	public void setDetalleConsulta(List<DetalleConsulta> detalleConsulta) {
 		this.detalleConsulta = detalleConsulta;
+	}
+
+	public String getNumConsultorio() {
+		return numConsultorio;
+	}
+
+	public void setNumConsultorio(String numConsultorio) {
+		this.numConsultorio = numConsultorio;
 	}
 
 	@Override
